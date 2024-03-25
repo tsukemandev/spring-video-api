@@ -36,11 +36,11 @@ public class RssSchedule {
 
     @Scheduled(cron = "0 * * * * *") // 매 분 0초마다 실행
     public void scheduledTask() throws JsonProcessingException, IOException {
-        System.out.println("스케줄러가 1분마다 실행됩니다. " + System.currentTimeMillis());
+        //System.out.println("스케줄러가 1분마다 실행됩니다. " + System.currentTimeMillis());
         ObjectMapper objectMapper = new ObjectMapper();
         rssRepository.save(Rss.builder().code("movie").content(objectMapper.writeValueAsString(getRssFeedItems())).build());
 
-        System.out.println("rss row count :  " + rssRepository.findAllByCode("movie").size());
+        log.info("scheduler start - rss row count :  " + rssRepository.findAllByCode("movie").size());
     }
 
 
@@ -88,7 +88,7 @@ public class RssSchedule {
 
         });
 
-        list.forEach(o -> System.out.println("rss item : " + o.getTitle()));
+        //list.forEach(o -> System.out.println("rss item : " + o.getTitle()));
 
         return list;
 
